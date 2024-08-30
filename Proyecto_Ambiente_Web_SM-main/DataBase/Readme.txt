@@ -1,0 +1,1 @@
+Se crea esta carpeta con la finalidad de almacenar los scripts de base de datos para el proyecto que vamos a realizar.

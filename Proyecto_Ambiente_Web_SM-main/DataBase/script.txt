@@ -1,0 +1,369 @@
+-- phpMyAdmin SQL Dump
+-- version 5.2.0
+-- https://www.phpmyadmin.net/
+--
+-- Servidor: 127.0.0.1
+-- Tiempo de generación: 22-04-2023 a las 06:28:22
+-- Versión del servidor: 10.4.27-MariaDB
+-- Versión de PHP: 8.2.0
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Base de datos: `proyecto_web`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `canton`
+--
+
+CREATE TABLE `canton` (
+  `id_CANTON` int(11) NOT NULL,
+  `NOMBRE` varchar(30) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `canton`
+--
+
+INSERT INTO `canton` (`id_CANTON`, `NOMBRE`) VALUES
+(1, 'SAN JOSE');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `cita`
+--
+
+CREATE TABLE `cita` (
+  `id_cita` int(11) NOT NULL,
+  `id_empleado` int(11) NOT NULL,
+  `cedula` int(11) NOT NULL,
+  `fecha` date NOT NULL,
+  `hora` time NOT NULL,
+  `usuario` varchar(50) NOT NULL,
+  `id_especialidad` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `cita`
+--
+
+INSERT INTO `cita` (`id_cita`, `id_empleado`, `cedula`, `fecha`, `hora`, `usuario`, `id_especialidad`) VALUES
+(3, 117170761, 151531254, '2023-04-21', '10:00:00', 'ejaen', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `consulta`
+--
+
+CREATE TABLE `consulta` (
+  `id_consulta` int(11) NOT NULL,
+  `id_cita` int(11) NOT NULL,
+  `descripcion_consulta` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `distrito`
+--
+
+CREATE TABLE `distrito` (
+  `id_DISTRITO` int(11) NOT NULL,
+  `NOMBRE` varchar(30) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `distrito`
+--
+
+INSERT INTO `distrito` (`id_DISTRITO`, `NOMBRE`) VALUES
+(1, 'SAN SEBASTIAN');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `empleado`
+--
+
+CREATE TABLE `empleado` (
+  `id_empleado` int(11) NOT NULL,
+  `nombre` varchar(50) NOT NULL,
+  `apellidos` varchar(50) NOT NULL,
+  `id_especialidad` int(11) NOT NULL,
+  `correo` varchar(40) NOT NULL,
+  `telefono` int(11) NOT NULL,
+  `genero` varchar(10) DEFAULT NULL,
+  `fechaNacimiento` date NOT NULL,
+  `id_PROVINCIA` int(11) NOT NULL,
+  `id_CANTON` int(11) NOT NULL,
+  `id_DISTRITO` int(11) NOT NULL,
+  `direccion` varchar(40) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `empleado`
+--
+
+INSERT INTO `empleado` (`id_empleado`, `nombre`, `apellidos`, `id_especialidad`, `correo`, `telefono`, `genero`, `fechaNacimiento`, `id_PROVINCIA`, `id_CANTON`, `id_DISTRITO`, `direccion`) VALUES
+(117170761, 'EDUARDO', 'JAEN ARIAS', 1, 'eduardojja47@gmail.com', 70590207, 'Masculino', '0000-00-00', 1, 1, 1, 'San José, San José, Costa Rica');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `especialidad`
+--
+
+CREATE TABLE `especialidad` (
+  `id_especialidad` int(11) NOT NULL,
+  `nombre` varchar(50) NOT NULL,
+  `descripcion_puesto` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `especialidad`
+--
+
+INSERT INTO `especialidad` (`id_especialidad`, `nombre`, `descripcion_puesto`) VALUES
+(1, 'Educación especial', 'Otras descripciones'),
+(3, 'Terapia de lenguaje', 'Otras descripciones'),
+(4, 'Terapia ocupacional', 'Otras descripciones'),
+(5, 'Psicopedagogía', 'Otras descripciones');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `paciente`
+--
+
+CREATE TABLE `paciente` (
+  `cedula` int(11) NOT NULL,
+  `nombre` varchar(50) NOT NULL,
+  `apellidos` varchar(50) NOT NULL,
+  `fechaNacimiento` date NOT NULL,
+  `genero` varchar(10) DEFAULT NULL,
+  `correo` varchar(40) NOT NULL,
+  `telefono` int(11) NOT NULL,
+  `id_PROVINCIA` int(11) NOT NULL,
+  `id_CANTON` int(11) NOT NULL,
+  `id_DISTRITO` int(11) NOT NULL,
+  `direccion` varchar(40) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `paciente`
+--
+
+INSERT INTO `paciente` (`cedula`, `nombre`, `apellidos`, `fechaNacimiento`, `genero`, `correo`, `telefono`, `id_PROVINCIA`, `id_CANTON`, `id_DISTRITO`, `direccion`) VALUES
+(101880253, 'MARVIN', 'JAEN GUEVARA', '1965-08-16', 'Masculino', 'mjaen@hotmail.com', 89521574, 1, 1, 1, 'San José, San José, Costa Rica'),
+(117170761, 'EDUARDO', 'JAEN ARIAS', '1998-08-18', 'Masculino', 'eduardojja47@gmail.com', 70590207, 1, 1, 1, 'San José'),
+(151531254, 'GEOVANNY', 'DOS SANTOS LEIVA', '1998-08-18', 'Masculino', 'geovannydos@s.com', 82648754, 1, 1, 1, 'BRAZIL'),
+(601880253, 'ETEL', 'ARIAS AGUERO', '2001-08-16', 'Femenino', 'etelari64@hotmail.com', 70590207, 1, 1, 1, 'De tiendas Picaros 100 suroeste');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `provincia`
+--
+
+CREATE TABLE `provincia` (
+  `id_PROVINCIA` int(11) NOT NULL,
+  `NOMBRE` varchar(30) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `provincia`
+--
+
+INSERT INTO `provincia` (`id_PROVINCIA`, `NOMBRE`) VALUES
+(1, 'SAN JOSE');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `usuarios`
+--
+
+CREATE TABLE `usuarios` (
+  `id_usuarios` int(11) NOT NULL,
+  `user` varchar(20) NOT NULL,
+  `password` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `usuarios`
+--
+
+INSERT INTO `usuarios` (`id_usuarios`, `user`, `password`) VALUES
+(1, 'ejaen', '1234');
+
+--
+-- Índices para tablas volcadas
+--
+
+--
+-- Indices de la tabla `canton`
+--
+ALTER TABLE `canton`
+  ADD PRIMARY KEY (`id_CANTON`);
+
+--
+-- Indices de la tabla `cita`
+--
+ALTER TABLE `cita`
+  ADD PRIMARY KEY (`id_cita`),
+  ADD KEY `cedula` (`cedula`),
+  ADD KEY `id_empleado` (`id_empleado`) USING BTREE;
+
+--
+-- Indices de la tabla `consulta`
+--
+ALTER TABLE `consulta`
+  ADD PRIMARY KEY (`id_consulta`),
+  ADD KEY `id_cita` (`id_cita`);
+
+--
+-- Indices de la tabla `distrito`
+--
+ALTER TABLE `distrito`
+  ADD PRIMARY KEY (`id_DISTRITO`);
+
+--
+-- Indices de la tabla `empleado`
+--
+ALTER TABLE `empleado`
+  ADD PRIMARY KEY (`id_empleado`),
+  ADD KEY `id_especialidad` (`id_especialidad`),
+  ADD KEY `id_PROVINCIA` (`id_PROVINCIA`),
+  ADD KEY `id_CANTON` (`id_CANTON`),
+  ADD KEY `id_DISTRITO` (`id_DISTRITO`);
+
+--
+-- Indices de la tabla `especialidad`
+--
+ALTER TABLE `especialidad`
+  ADD PRIMARY KEY (`id_especialidad`);
+
+--
+-- Indices de la tabla `paciente`
+--
+ALTER TABLE `paciente`
+  ADD PRIMARY KEY (`cedula`),
+  ADD KEY `id_PROVINCIA` (`id_PROVINCIA`),
+  ADD KEY `id_CANTON` (`id_CANTON`),
+  ADD KEY `id_DISTRITO` (`id_DISTRITO`);
+
+--
+-- Indices de la tabla `provincia`
+--
+ALTER TABLE `provincia`
+  ADD PRIMARY KEY (`id_PROVINCIA`);
+
+--
+-- Indices de la tabla `usuarios`
+--
+ALTER TABLE `usuarios`
+  ADD PRIMARY KEY (`id_usuarios`);
+
+--
+-- AUTO_INCREMENT de las tablas volcadas
+--
+
+--
+-- AUTO_INCREMENT de la tabla `canton`
+--
+ALTER TABLE `canton`
+  MODIFY `id_CANTON` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT de la tabla `cita`
+--
+ALTER TABLE `cita`
+  MODIFY `id_cita` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT de la tabla `consulta`
+--
+ALTER TABLE `consulta`
+  MODIFY `id_consulta` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `distrito`
+--
+ALTER TABLE `distrito`
+  MODIFY `id_DISTRITO` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT de la tabla `empleado`
+--
+ALTER TABLE `empleado`
+  MODIFY `id_empleado` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=117170762;
+
+--
+-- AUTO_INCREMENT de la tabla `especialidad`
+--
+ALTER TABLE `especialidad`
+  MODIFY `id_especialidad` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT de la tabla `provincia`
+--
+ALTER TABLE `provincia`
+  MODIFY `id_PROVINCIA` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT de la tabla `usuarios`
+--
+ALTER TABLE `usuarios`
+  MODIFY `id_usuarios` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- Restricciones para tablas volcadas
+--
+
+--
+-- Filtros para la tabla `cita`
+--
+ALTER TABLE `cita`
+  ADD CONSTRAINT `cita_ibfk_1` FOREIGN KEY (`id_empleado`) REFERENCES `empleado` (`id_empleado`),
+  ADD CONSTRAINT `cita_ibfk_2` FOREIGN KEY (`cedula`) REFERENCES `paciente` (`cedula`);
+
+--
+-- Filtros para la tabla `consulta`
+--
+ALTER TABLE `consulta`
+  ADD CONSTRAINT `consulta_ibfk_1` FOREIGN KEY (`id_cita`) REFERENCES `cita` (`id_cita`);
+
+--
+-- Filtros para la tabla `empleado`
+--
+ALTER TABLE `empleado`
+  ADD CONSTRAINT `empleado_ibfk_1` FOREIGN KEY (`id_especialidad`) REFERENCES `especialidad` (`id_especialidad`),
+  ADD CONSTRAINT `empleado_ibfk_2` FOREIGN KEY (`id_PROVINCIA`) REFERENCES `provincia` (`id_PROVINCIA`),
+  ADD CONSTRAINT `empleado_ibfk_3` FOREIGN KEY (`id_CANTON`) REFERENCES `canton` (`id_CANTON`),
+  ADD CONSTRAINT `empleado_ibfk_4` FOREIGN KEY (`id_DISTRITO`) REFERENCES `distrito` (`id_DISTRITO`);
+
+--
+-- Filtros para la tabla `paciente`
+--
+ALTER TABLE `paciente`
+  ADD CONSTRAINT `paciente_ibfk_1` FOREIGN KEY (`id_PROVINCIA`) REFERENCES `provincia` (`id_PROVINCIA`),
+  ADD CONSTRAINT `paciente_ibfk_2` FOREIGN KEY (`id_CANTON`) REFERENCES `canton` (`id_CANTON`),
+  ADD CONSTRAINT `paciente_ibfk_3` FOREIGN KEY (`id_DISTRITO`) REFERENCES `distrito` (`id_DISTRITO`);
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
